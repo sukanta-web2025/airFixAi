@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Plus, Filter, Edit3, Trash2, ShieldCheck, Zap, Thermometer, Wind, AlertTriangle } from 'lucide-react';
+import { Search, Plus, Edit3, Trash2, ShieldCheck, Zap, Thermometer, Wind, AlertTriangle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import WarningModal from '../../components/Modals/WarningModal';
 

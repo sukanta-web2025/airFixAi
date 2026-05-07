@@ -1,10 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
-  ArrowLeft, 
   Play, 
-  Share2, 
-  Heart,
   ChevronLeft
 } from 'lucide-react';
 

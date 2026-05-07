@@ -3,7 +3,6 @@ import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { 
   ArrowLeft, 
   Save, 
-  Video,
   Link,
   Type,
   FileText,

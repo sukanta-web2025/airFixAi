@@ -3,14 +3,11 @@ import {
   LayoutDashboard,
   CalendarCheck,
   Users,
-  Wrench,
   Settings,
   LogOut,
   ChevronRight,
-  Wind,
   Activity,
   Video,
-  MessageSquare,
   X
 } from 'lucide-react';
 import { NavLink, useNavigate } from 'react-router-dom';

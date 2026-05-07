@@ -7,10 +7,8 @@ import {
   Paperclip,
   Smile,
   CheckCheck,
-  Circle,
   User,
-  Image as ImageIcon,
-  FileText
+  Image as ImageIcon
 } from 'lucide-react';
 import WarningModal from '../../components/Modals/WarningModal';
 

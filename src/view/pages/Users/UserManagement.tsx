@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Filter, Plus, FileText, MoreVertical, Edit3, Trash2, UserCheck, UserPlus, Eye } from 'lucide-react';
+import { Search, Filter, FileText, MoreVertical, Edit3, Trash2, UserCheck, UserPlus, Eye } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import AddUserModal from '../../components/Modals/AddUserModal';
 import WarningModal from '../../components/Modals/WarningModal';

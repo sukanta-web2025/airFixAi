@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { 
   Plus, 
   Search, 
-  MoreVertical, 
   Edit2, 
   Trash2, 
   Play, 

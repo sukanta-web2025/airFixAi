@@ -3,8 +3,7 @@ import {
   Eye, 
   EyeOff, 
   ShieldCheck, 
-  X,
-  AlertCircle
+  X
 } from 'lucide-react';
 
 interface ChangePasswordModalProps {

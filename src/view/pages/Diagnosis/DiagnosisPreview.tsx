@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
-  ChevronLeft, 
   ChevronRight, 
   Wind, 
   Monitor, 
@@ -15,7 +14,6 @@ import {
   Settings,
   ShieldCheck,
   Droplets,
-  Thermometer,
   Zap,
   Activity,
   ArrowLeft,
@@ -31,7 +29,7 @@ interface StepProps {
 const DiagnosisPreview: React.FC = () => {
   const [step, setStep] = useState(1);
   const [diagnosisData, setDiagnosisData] = useState<any>({});
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [_, setIsAnalyzing] = useState(false);
   const [analysisProgress, setAnalysisProgress] = useState(0);
   const navigate = useNavigate();
 

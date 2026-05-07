@@ -12,7 +12,6 @@ import {
   DollarSign,
   Tag,
   Printer,
-  MoreHorizontal,
   CheckCircle2,
   AlertCircle
 } from 'lucide-react';

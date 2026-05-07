@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Bell, Shield, Mail, User, CreditCard, Search, Filter, Trash2, CheckCircle, Clock, Settings, Lock, AlertTriangle } from 'lucide-react';
+import { Shield, Mail, User, CreditCard, Search, Trash2, CheckCircle, Clock, Settings, Lock, AlertTriangle } from 'lucide-react';
 import WarningModal from '../../components/Modals/WarningModal';
 
 const NotificationsPage: React.FC = () => {

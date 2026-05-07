@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { ArrowLeft, Save, User, MapPin, Wrench, Calendar, Clock, Clipboard, Info } from 'lucide-react';
+import { ArrowLeft, Save, User, MapPin, Wrench, Calendar, Clipboard } from 'lucide-react';
 
 const AddBookingPage: React.FC = () => {
   const navigate = useNavigate();

@@ -6,12 +6,8 @@ import {
   Mail, 
   Phone, 
   MapPin, 
-  Calendar, 
   Clock,
-  Briefcase,
-  User as UserIcon,
-  CheckCircle2,
-  AlertCircle
+  Briefcase
 } from 'lucide-react';
 
 export const UserDetails: React.FC = () => {

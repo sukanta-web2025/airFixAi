@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Mail, Lock, Eye, EyeOff, ArrowRight } from 'lucide-react';
+import { Eye, EyeOff, ArrowRight } from 'lucide-react';
 import logo from '../../../assets/airFixAi_logo.jpeg';
 
 const Login: React.FC = () => {

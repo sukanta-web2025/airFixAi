@@ -1,5 +1,5 @@
 import type { AxiosError } from "axios";
-import { globalErrorService } from "../services/core/globalErrorService";
+// import { globalErrorService } from "../services/core/globalErrorService";
 // import { showToast } from "../view/components/feedback/toast/toast.service";
 import toast from "react-hot-toast";
 
@@ -30,19 +30,23 @@ class ErrorHandler {
       const isOffline = !navigator.onLine;
 
       if (isOffline) {
-
+        toast.error("No Internet Connection");
+        /*
         globalErrorService.show({
           status: 0,
           message: "No Internet Connection",
         });
+        */
 
 
       } else {
-
+        toast.error("Server Unavailable");
+        /*
         globalErrorService.show({
           status: 533,
           message: "Server Unavailable",
         });
+        */
 
       }
 
@@ -95,10 +99,12 @@ class ErrorHandler {
 
         toast.error(message);
 
+        /*
         globalErrorService.show({
           status,
           message,
         });
+        */
 
         break;
 

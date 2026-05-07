@@ -11,15 +11,16 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ onMenuClick, onCollapseClick, isCollapsed }) => {
   const { theme, toggleTheme } = useTheme();
-  const [showNotifications, setShowNotifications] = React.useState(false);
+  const [_, setShowNotifications] = React.useState(false);
 
   // Sample notifications
-  const notifications = [
-    { id: 1, title: 'New Service Request', time: '5m ago', type: 'new', color: 'var(--color-primary)' },
-    { id: 2, title: 'Service Overdue: AC-902', time: '20m ago', type: 'alert', color: 'var(--color-danger)' },
-    { id: 3, title: 'Engineer Dispatched', time: '1h ago', type: 'info', color: 'var(--color-success)' },
-    { id: 4, title: 'System Backup Complete', time: '3h ago', type: 'system', color: 'var(--color-accent)' },
-  ];
+  // Sample notifications
+  // const notifications = [
+  //   { id: 1, title: 'New Service Request', time: '5m ago', type: 'new', color: 'var(--color-primary)' },
+  //   { id: 2, title: 'Service Overdue: AC-902', time: '20m ago', type: 'alert', color: 'var(--color-danger)' },
+  //   { id: 3, title: 'Engineer Dispatched', time: '1h ago', type: 'info', color: 'var(--color-success)' },
+  //   { id: 4, title: 'System Backup Complete', time: '3h ago', type: 'system', color: 'var(--color-accent)' },
+  // ];
 
   return (
     <header

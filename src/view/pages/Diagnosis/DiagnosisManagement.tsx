@@ -9,10 +9,8 @@ import {
   Trash2, 
   ListTree, 
   HelpCircle, 
-  CheckCircle2, 
   ChevronRight,
-  LayoutGrid,
-  FileText
+  LayoutGrid
 } from 'lucide-react';
 import WarningModal from '../../components/Modals/WarningModal';
 

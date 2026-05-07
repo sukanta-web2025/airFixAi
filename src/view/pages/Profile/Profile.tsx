@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
 import {
-  User, Mail, Shield, Camera, MapPin,
-  Phone, Edit2, Settings, Lock, Globe,
-  CheckCircle2, ChevronRight
+  User, Shield, Camera,
+  Edit2, Lock,
+  ChevronRight
 } from 'lucide-react';
 import WarningModal from '../../components/Modals/WarningModal';
 import ChangePasswordModal from '../../components/Modals/ChangePasswordModal';

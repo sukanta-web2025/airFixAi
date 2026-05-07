@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { ArrowLeft, Save, Zap, Clock, DollarSign, Tag, Info } from 'lucide-react';
+import { ArrowLeft, Save, Clock, DollarSign, Info } from 'lucide-react';
 
 const AddServicePage: React.FC = () => {
   const navigate = useNavigate();

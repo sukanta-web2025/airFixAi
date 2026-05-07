@@ -8,7 +8,6 @@ import {
   LayoutGrid, 
   ListTree, 
   HelpCircle,
-  X,
   Check
 } from 'lucide-react';
 

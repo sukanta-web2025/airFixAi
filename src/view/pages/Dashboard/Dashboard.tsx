@@ -2,10 +2,7 @@ import React from 'react';
 import { 
   Users, 
   CalendarCheck, 
-  TrendingUp, 
-  Clock,
   ArrowUpRight,
-  Wind,
   CheckCircle2,
   AlertCircle
 } from 'lucide-react';
