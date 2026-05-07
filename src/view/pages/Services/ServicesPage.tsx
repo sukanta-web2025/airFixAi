@@ -40,7 +40,7 @@ const ServicesPage: React.FC = () => {
         isOpen={showEditWarning}
         onClose={() => setShowEditWarning(false)}
         title="Enter Edit Mode?"
-        description={`You are about to modify the specifications for "${selectedService?.name}". Changes will affect global pricing and technician durations.`}
+        description={`You are about to modify the specifications for "${selectedService?.name}". Changes will affect global pricing and service provider durations.`}
         buttons={[
           { text: 'Cancel', variant: 'secondary', onClick: () => setShowEditWarning(false) },
           { text: 'Proceed to Edit', variant: 'primary', onClick: () => {

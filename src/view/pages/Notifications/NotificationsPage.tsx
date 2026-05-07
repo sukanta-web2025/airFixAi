@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import { Bell, Shield, Mail, User, CreditCard, Search, Filter, Trash2, CheckCircle, Clock } from 'lucide-react';
+import { Bell, Shield, Mail, User, CreditCard, Search, Filter, Trash2, CheckCircle, Clock, Settings, Lock, AlertTriangle } from 'lucide-react';
+import WarningModal from '../../components/Modals/WarningModal';
 
 const NotificationsPage: React.FC = () => {
   const [filter, setFilter] = useState('all');
+  const [showReadWarning, setShowReadWarning] = useState(false);
+  const [showClearWarning, setShowClearWarning] = useState(false);
 
   const allNotifications = [
     { id: 1, title: 'Critical: System Maintenance', desc: 'The AirFix AI core engine will undergo scheduled maintenance at 2:00 AM UTC. Expect brief downtime.', time: '10m ago', type: 'system', icon: Settings, color: 'var(--color-accent)' },
@@ -30,10 +33,10 @@ const NotificationsPage: React.FC = () => {
           </p>
         </div>
         <div style={{ display: 'flex', gap: '12px' }}>
-          <button className="secondary-btn">
+          <button className="secondary-btn" onClick={() => setShowReadWarning(true)}>
             <CheckCircle size={18} /> Mark all read
           </button>
-          <button className="secondary-btn" style={{ color: 'var(--color-danger)' }}>
+          <button className="secondary-btn" style={{ color: 'var(--color-danger)' }} onClick={() => setShowClearWarning(true)}>
             <Trash2 size={18} /> Clear All
           </button>
         </div>
@@ -138,12 +141,33 @@ const NotificationsPage: React.FC = () => {
           </div>
         ))}
       </div>
+
+      <WarningModal 
+        isOpen={showReadWarning}
+        onClose={() => setShowReadWarning(false)}
+        title="Mark All as Read?"
+        description="This will clear the unread status from all notifications in your list. This action cannot be undone."
+        icon={<CheckCircle size={40} color="var(--color-primary)" />}
+        buttons={[
+          { text: 'Cancel', variant: 'secondary', onClick: () => setShowReadWarning(false) },
+          { text: 'Confirm', variant: 'primary', onClick: () => setShowReadWarning(false) }
+        ]}
+      />
+
+      <WarningModal 
+        isOpen={showClearWarning}
+        onClose={() => setShowClearWarning(false)}
+        title="Clear All Notifications?"
+        description="Warning: This will permanently delete all notifications from your inbox. You will not be able to recover them."
+        icon={<AlertTriangle size={40} color="var(--color-danger)" />}
+        buttons={[
+          { text: 'Not Now', variant: 'secondary', onClick: () => setShowClearWarning(false) },
+          { text: 'Delete All', variant: 'danger', onClick: () => setShowClearWarning(false) }
+        ]}
+      />
     </div>
   );
 };
 
-// Internal icon mappings since we might not have all named identically
-const Lock = Shield;
-const Settings = Bell;
 
 export default NotificationsPage;

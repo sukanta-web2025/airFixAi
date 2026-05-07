@@ -16,7 +16,10 @@ const bookingsData = [
 export const BookingsView: React.FC = () => {
   const [showFilters, setShowFilters] = useState(false);
   const [showAddWarning, setShowAddWarning] = useState(false);
+  const [showCompleteWarning, setShowCompleteWarning] = useState(false);
+  const [showCancelWarning, setShowCancelWarning] = useState(false);
   const [activeActionId, setActiveActionId] = useState<string | null>(null);
+  const [selectedBooking, setSelectedBooking] = useState<any>(null);
   const navigate = useNavigate();
 
   // Close tooltip on outside click
@@ -36,13 +39,13 @@ export const BookingsView: React.FC = () => {
 
   return (
     <>
-      <BookingFilterModal 
-        isOpen={showFilters} 
-        onClose={() => setShowFilters(false)} 
-        onApply={(f) => console.log('Filters:', f)} 
+      <BookingFilterModal
+        isOpen={showFilters}
+        onClose={() => setShowFilters(false)}
+        onApply={(f) => console.log('Filters:', f)}
       />
 
-      <WarningModal 
+      <WarningModal
         isOpen={showAddWarning}
         onClose={() => setShowAddWarning(false)}
         title="Initialize New Request?"
@@ -50,10 +53,12 @@ export const BookingsView: React.FC = () => {
         icon={<TicketPlus size={40} />}
         buttons={[
           { text: 'Not Now', variant: 'secondary', onClick: () => setShowAddWarning(false) },
-          { text: 'Yes, Create Ticket', variant: 'primary', onClick: () => {
-            setShowAddWarning(false);
-            navigate('/admin/bookings/new');
-          }}
+          {
+            text: 'Yes, Create Ticket', variant: 'primary', onClick: () => {
+              setShowAddWarning(false);
+              navigate('/admin/bookings/new');
+            }
+          }
         ]}
       />
 
@@ -138,7 +143,7 @@ export const BookingsView: React.FC = () => {
           color: var(--color-danger) !important;
         }
       `}</style>
-      
+
       <div className="view-header flex justify-between items-center mb-6">
         <div>
           <h2 style={{ fontSize: '2rem', fontWeight: 900, color: 'var(--text-title)', letterSpacing: '-1.5px', margin: 0 }}>
@@ -146,13 +151,13 @@ export const BookingsView: React.FC = () => {
           </h2>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', fontWeight: 600, marginTop: '4px' }}>Monitor and manage all system service requests.</p>
         </div>
-        <button 
+        {/* <button 
           className="primary-btn new-booking-btn"
           onClick={() => setShowAddWarning(true)}
         >
           <Plus size={20} />
           <span>New Request</span>
-        </button>
+        </button> */}
       </div>
 
       <div className="glass-panel" style={{ padding: '28px', border: '1px solid var(--border-color)' }}>
@@ -160,15 +165,15 @@ export const BookingsView: React.FC = () => {
         <div style={{ display: 'flex', gap: '16px', marginBottom: '32px', flexWrap: 'wrap' }}>
           <div style={{ position: 'relative', flex: 1, minWidth: '240px' }}>
             <Search size={18} style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
-            <input 
-              type="text" 
-              placeholder="Search by ID, name or technician..." 
+            <input
+              type="text"
+              placeholder="Search by ID, name or service provider..."
               className="form-input"
               style={{ paddingLeft: '48px' }}
             />
           </div>
-          <button 
-            className="secondary-btn" 
+          <button
+            className="secondary-btn"
             onClick={() => setShowFilters(true)}
             style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '12px 20px' }}
           >
@@ -189,7 +194,7 @@ export const BookingsView: React.FC = () => {
                 <th>Booking ID</th>
                 <th>Customer</th>
                 <th>Service Type</th>
-                <th>Assigned Tech</th>
+                <th>Assigned Provider</th>
                 <th>Price</th>
                 <th>Status</th>
                 <th>Timeline</th>
@@ -206,8 +211,8 @@ export const BookingsView: React.FC = () => {
                   <td style={{ fontWeight: 600 }}>{booking.service}</td>
                   <td>
                     {booking.tech === 'Pending' ? (
-                      <span style={{ 
-                        color: 'var(--color-danger)', 
+                      <span style={{
+                        color: 'var(--color-danger)',
                         fontWeight: 800,
                         background: 'rgba(239, 68, 68, 0.1)',
                         padding: '6px 12px',
@@ -231,13 +236,13 @@ export const BookingsView: React.FC = () => {
                   </td>
                   <td style={{ color: 'var(--text-muted)', fontSize: '0.85rem', fontWeight: 700 }}>{booking.date}</td>
                   <td style={{ textAlign: 'right', position: 'relative' }}>
-                    <button 
+                    <button
                       className="action-toggle-btn hover-glass"
                       onClick={() => setActiveActionId(activeActionId === booking.id ? null : booking.id)}
-                      style={{ 
-                        background: activeActionId === booking.id ? 'var(--bg-card)' : 'transparent', 
+                      style={{
+                        background: activeActionId === booking.id ? 'var(--bg-card)' : 'transparent',
                         border: '1px solid var(--border-color)',
-                        cursor: 'pointer', 
+                        cursor: 'pointer',
                         color: 'var(--text-title)',
                         width: '36px',
                         height: '36px',
@@ -254,17 +259,25 @@ export const BookingsView: React.FC = () => {
                     {/* Action Tooltip */}
                     {activeActionId === booking.id && (
                       <div className="action-tooltip">
-                        <div className="action-item" onClick={() => setActiveActionId(null)}>
+                        <div className="action-item" onClick={() => navigate(`/admin/bookings/${encodeURIComponent(booking.id)}`)}>
                           <Eye size={16} /> View Details
                         </div>
-                        <div className="action-item" onClick={() => setActiveActionId(null)}>
+                        {/* <div className="action-item" onClick={() => navigate(`/admin/bookings/edit/${encodeURIComponent(booking.id)}`, { state: { booking } })}>
                           <Edit3 size={16} /> Edit Record
-                        </div>
-                        <div className="action-item" onClick={() => setActiveActionId(null)}>
+                        </div> */}
+                        <div className="action-item" onClick={() => {
+                          setSelectedBooking(booking);
+                          setShowCompleteWarning(true);
+                          setActiveActionId(null);
+                        }}>
                           <CheckCircle size={16} color="var(--color-success)" /> Mark Complete
                         </div>
                         <div style={{ margin: '4px 0', borderTop: '1px solid var(--border-color)' }}></div>
-                        <div className="action-item action-danger" style={{ color: 'var(--color-danger)' }} onClick={() => setActiveActionId(null)}>
+                        <div className="action-item action-danger" style={{ color: 'var(--color-danger)' }} onClick={() => {
+                          setSelectedBooking(booking);
+                          setShowCancelWarning(true);
+                          setActiveActionId(null);
+                        }}>
                           <Trash2 size={16} /> Cancel Service
                         </div>
                       </div>
@@ -287,6 +300,29 @@ export const BookingsView: React.FC = () => {
           </div>
         </div>
       </div>
+      <WarningModal
+        isOpen={showCompleteWarning}
+        onClose={() => setShowCompleteWarning(false)}
+        title="Finalize Service Job?"
+        description={`You are about to mark booking ${selectedBooking?.id} as completed. This will trigger the final invoice and notify the customer.`}
+        icon={<CheckCircle size={40} color="var(--color-success)" />}
+        buttons={[
+          { text: 'Keep Active', variant: 'secondary', onClick: () => setShowCompleteWarning(false) },
+          { text: 'Yes, Complete', variant: 'primary', onClick: () => setShowCompleteWarning(false) }
+        ]}
+      />
+
+      <WarningModal
+        isOpen={showCancelWarning}
+        onClose={() => setShowCancelWarning(false)}
+        title="Cancel This Service?"
+        description={`Warning: Cancelling ${selectedBooking?.id} will notify the customer and the assigned provider. This action may incur platform fees.`}
+        icon={<Trash2 size={40} color="var(--color-danger)" />}
+        buttons={[
+          { text: 'Keep Ticket', variant: 'secondary', onClick: () => setShowCancelWarning(false) },
+          { text: 'Confirm Cancellation', variant: 'danger', onClick: () => setShowCancelWarning(false) }
+        ]}
+      />
     </>
   );
 };

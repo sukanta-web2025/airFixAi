@@ -12,7 +12,7 @@ import {
 
 const stats = [
   { label: 'Total Requests', value: '1,284', trend: '+12.5%', icon: CalendarCheck, color: 'var(--color-primary)' },
-  { label: 'Active Technicians', value: '42', trend: '+3', icon: Users, color: 'var(--color-success)' },
+  { label: 'Active Providers', value: '42', trend: '+3', icon: Users, color: 'var(--color-success)' },
   { label: 'Pending Repairs', value: '18', trend: '-5%', icon: AlertCircle, color: 'var(--color-danger)' },
   { label: 'Completed Jobs', value: '956', trend: '+18%', icon: CheckCircle2, color: 'var(--color-primary)' },
 ];
@@ -121,7 +121,7 @@ export const Dashboard: React.FC = () => {
 
         {/* Technician Status */}
         <div className="glass-panel" style={{ padding: '28px' }}>
-          <h3 style={{ fontWeight: 800, color: 'var(--text-title)', fontSize: '1.25rem', marginBottom: '28px' }}>Active Staff</h3>
+          <h3 style={{ fontWeight: 800, color: 'var(--text-title)', fontSize: '1.25rem', marginBottom: '28px' }}>Active Providers</h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
             {[
               { name: 'Alex Rivera', status: 'On Job', location: 'Brooklyn' },

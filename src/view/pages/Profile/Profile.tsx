@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
-  User, Mail, Shield, Bell, Camera, MapPin,
+  User, Mail, Shield, Camera, MapPin,
   Phone, Edit2, Settings, Lock, Globe,
-  CheckCircle2, CreditCard, ChevronRight
+  CheckCircle2, ChevronRight
 } from 'lucide-react';
 import WarningModal from '../../components/Modals/WarningModal';
 import ChangePasswordModal from '../../components/Modals/ChangePasswordModal';
@@ -12,6 +12,23 @@ const Profile: React.FC = () => {
   const [showWarningModal, setShowWarningModal] = useState(false);
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [showGeneralWarning, setShowGeneralWarning] = useState(false);
+  const [profileImage, setProfileImage] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleImageClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfileImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   return (
     <div className="profile-container" style={{ animation: 'fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1)' }}>
@@ -106,24 +123,39 @@ const Profile: React.FC = () => {
               overflow: 'hidden',
               border: '2px solid rgba(255, 255, 255, 0.1)'
             }}>
-              <User size={60} color="white" />
+              {profileImage ? (
+                <img src={profileImage} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              ) : (
+                <User size={60} color="white" />
+              )}
             </div>
-            <button style={{
-              position: 'absolute',
-              bottom: '-5px',
-              right: '-5px',
-              width: '36px',
-              height: '36px',
-              borderRadius: '12px',
-              background: 'var(--color-accent)',
-              border: '3px solid var(--bg-page)',
-              color: 'white',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-              boxShadow: '0 8px 16px rgba(0,0,0,0.2)'
-            }}>
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleImageChange}
+              accept="image/*"
+              style={{ display: 'none' }}
+            />
+            <button
+              onClick={handleImageClick}
+              style={{
+                position: 'absolute',
+                bottom: '-5px',
+                right: '-5px',
+                width: '36px',
+                height: '36px',
+                borderRadius: '12px',
+                background: 'var(--color-accent)',
+                border: '3px solid var(--bg-page)',
+                color: 'white',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                boxShadow: '0 8px 16px rgba(0,0,0,0.2)',
+                zIndex: 4
+              }}
+            >
               <Camera size={16} />
             </button>
           </div>
@@ -152,8 +184,6 @@ const Profile: React.FC = () => {
           {[
             { id: 'account', label: 'Account Details', icon: User },
             { id: 'security', label: 'Security & login', icon: Shield },
-            { id: 'notifications', label: 'Notifications', icon: Bell },
-            { id: 'billing', label: 'Service Packages', icon: CreditCard },
           ].map(tab => (
             <button
               key={tab.id}
@@ -244,55 +274,13 @@ const Profile: React.FC = () => {
                   <button className="secondary-btn" onClick={() => setShowWarningModal(true)}>Update Password</button>
                 </div>
 
-                <div style={{
-                  padding: '24px',
-                  background: 'rgba(255,255,255,0.02)',
-                  borderRadius: '20px',
-                  border: '1px solid var(--border-color)',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
-                }}>
-                  <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                    <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'rgba(255,140,0,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-accent)' }}>
-                      <Shield size={24} />
-                    </div>
-                    <div>
-                      <h4 style={{ margin: 0, color: 'var(--text-title)' }}>Two-Factor Auth</h4>
-                      <p style={{ margin: '4px 0 0 0', fontSize: '0.85rem', color: 'var(--text-muted)' }}>Add extra layer of security</p>
-                    </div>
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <span className="badge badge-active">Active</span>
-                    <button className="secondary-btn">Manage</button>
-                  </div>
-                </div>
+
               </div>
             </div>
           )}
 
           {/* ... Other tabs follow similar premium pattern ... */}
-          {activeTab === 'notifications' && (
-            <div style={{ animation: 'fadeIn 0.4s ease-out' }}>
-              <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-title)', marginBottom: '32px' }}>Notifications Control</h3>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '16px' }}>
-                {['Service Overdue Alerts', 'System Health Reports', 'Technician Dispatch confirmations', 'User Feedback Summaries'].map(item => (
-                  <div key={item} style={{
-                    padding: '20px 24px',
-                    background: 'rgba(255,255,255,0.03)',
-                    borderRadius: '16px',
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    border: '1px solid var(--border-color)'
-                  }}>
-                    <span style={{ fontWeight: 600, color: 'var(--text-main)' }}>{item}</span>
-                    <div className="badge badge-active" style={{ cursor: 'pointer' }}>Enabled</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
+
         </div>
       </div>
 

@@ -8,6 +8,9 @@ import {
   LogOut,
   ChevronRight,
   Wind,
+  Activity,
+  Video,
+  MessageSquare,
   X
 } from 'lucide-react';
 import { NavLink, useNavigate } from 'react-router-dom';
@@ -17,8 +20,11 @@ import WarningModal from '../Modals/WarningModal';
 const navItems = [
   { icon: LayoutDashboard, label: 'Dashboard', path: '/admin' },
   { icon: CalendarCheck, label: 'Bookings', path: '/admin/bookings' },
-  { icon: Users, label: 'Technicians', path: '/admin/technicians' },
-  { icon: Wrench, label: 'Services', path: '/admin/services' },
+  { icon: Activity, label: 'Diagnosis Manager', path: '/admin/diagnosis' },
+  { icon: Video, label: 'Video Guides', path: '/admin/videos' },
+  // { icon: MessageSquare, label: 'Chat', path: '/admin/chat' },
+  { icon: Users, label: 'User Management', path: '/admin/users' },
+  // { icon: Wrench, label: 'Services', path: '/admin/services' },
   { icon: Settings, label: 'Settings', path: '/admin/settings' },
 ];
 
@@ -35,17 +41,19 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, isCollapsed, onClose }
 
   return (
     <>
-      <WarningModal 
+      <WarningModal
         isOpen={showLogoutWarning}
         onClose={() => setShowLogoutWarning(false)}
         title="Confirm Sign Out"
         description="Are you sure you want to end your administrative session? You will need to re-authenticate to access the AirFix AI dashboard."
         buttons={[
           { text: 'Stay Logged In', variant: 'secondary', onClick: () => setShowLogoutWarning(false) },
-          { text: 'Sign Me Out', variant: 'danger', onClick: () => {
-            setShowLogoutWarning(false);
-            navigate('/login');
-          }}
+          {
+            text: 'Sign Me Out', variant: 'danger', onClick: () => {
+              setShowLogoutWarning(false);
+              navigate('/login');
+            }
+          }
         ]}
       />
       <aside
@@ -172,7 +180,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, isCollapsed, onClose }
         </nav>
 
         <div style={{ marginTop: 'auto', borderTop: '1px solid var(--sidebar-border)', paddingTop: '24px' }}>
-          <button 
+          <button
             onClick={() => setShowLogoutWarning(true)}
             className="secondary-btn"
             style={{

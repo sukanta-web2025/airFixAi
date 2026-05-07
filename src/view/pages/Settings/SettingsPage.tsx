@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { 
   Shield, 
-  Globe, 
   Palette, 
   Save, 
   Smartphone,
@@ -12,13 +11,12 @@ import { useTheme } from '../../../contexts/ThemeContext';
 
 const SettingsPage: React.FC = () => {
   const { theme, toggleTheme, accentColor, setAccentColor } = useTheme();
-  const [activeTab, setActiveTab] = useState('general');
+  const [activeTab, setActiveTab] = useState('appearance');
   const [saveSuccess, setSaveSuccess] = useState(false);
 
   const tabs = [
-    { id: 'general', label: 'General', icon: <Globe size={20} /> },
-    { id: 'security', label: 'Security', icon: <Shield size={20} /> },
     { id: 'appearance', label: 'Appearance', icon: <Palette size={20} /> },
+    { id: 'security', label: 'Security', icon: <Shield size={20} /> },
   ];
 
   const handleSave = () => {
@@ -82,60 +80,6 @@ const SettingsPage: React.FC = () => {
 
         {/* Content Area */}
         <div className="glass-panel" style={{ padding: '40px' }}>
-          {activeTab === 'general' && (
-            <div style={{ animation: 'fadeIn 0.4s ease-out' }}>
-              <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-title)', marginBottom: '32px', display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <Globe size={24} className="gradient-text" />
-                General Configuration
-              </h3>
-              
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
-                  <div>
-                    <label className="form-label">Platform Name</label>
-                    <input type="text" className="form-input" defaultValue="AirFix AI Admin" />
-                  </div>
-                  <div>
-                    <label className="form-label">Support Email</label>
-                    <input type="email" className="form-input" defaultValue="support@airfix.ai" />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="form-label">Timezone</label>
-                  <select className="form-input">
-                    <option>(GMT+08:00) Singapore, Kuala Lumpur</option>
-                    <option>(GMT+00:00) London, Casablanca</option>
-                    <option>(GMT-05:00) New York, Toronto</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="form-label">System Currency</label>
-                  <div style={{ display: 'flex', gap: '12px' }}>
-                    {['USD ($)', 'EUR (€)', 'GBP (£)', 'MYR (RM)'].map(curr => (
-                      <button 
-                        key={curr}
-                        style={{
-                          padding: '12px 20px',
-                          borderRadius: '12px',
-                          border: '1px solid var(--border-color)',
-                          background: curr.includes('USD') ? 'var(--color-primary)' : 'var(--bg-page)',
-                          color: curr.includes('USD') ? 'white' : 'var(--text-title)',
-                          fontWeight: 700,
-                          fontSize: '0.9rem',
-                          cursor: 'pointer'
-                        }}
-                      >
-                        {curr}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
           {activeTab === 'appearance' && (
             <div style={{ animation: 'fadeIn 0.4s ease-out' }}>
               <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-title)', marginBottom: '32px', display: 'flex', alignItems: 'center', gap: '12px' }}>

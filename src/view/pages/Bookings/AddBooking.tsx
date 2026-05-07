@@ -1,9 +1,42 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Save, User, MapPin, Wrench, Calendar, Clock, Clipboard } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { ArrowLeft, Save, User, MapPin, Wrench, Calendar, Clock, Clipboard, Info } from 'lucide-react';
 
 const AddBookingPage: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const editData = location.state?.booking;
+
+  const [formData, setFormData] = React.useState({
+    customer: '',
+    phone: '',
+    address: '',
+    service: 'Periodic Maintenance',
+    unitModel: '',
+    description: '',
+    date: '',
+    priority: 'Medium'
+  });
+
+  React.useEffect(() => {
+    if (editData) {
+      setFormData({
+        customer: editData.customer || '',
+        phone: editData.phone || '',
+        address: editData.address || '',
+        service: editData.service || 'Periodic Maintenance',
+        unitModel: editData.unitModel || '',
+        description: editData.description || '',
+        date: editData.date || '',
+        priority: editData.priority || 'Medium'
+      });
+    }
+  }, [editData]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
 
   return (
     <div>
@@ -27,9 +60,11 @@ const AddBookingPage: React.FC = () => {
         </button>
         <div>
           <h2 style={{ fontSize: '2rem', fontWeight: 900, color: 'var(--text-title)', letterSpacing: '-1.5px', margin: 0 }}>
-            New Service <span className="gradient-text">Ticket</span>
+            {editData ? 'Edit' : 'New'} Service <span className="gradient-text">Ticket</span>
           </h2>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', fontWeight: 600, marginTop: '4px' }}>Create a fresh maintenance log for AirFix AI.</p>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', fontWeight: 600, marginTop: '4px' }}>
+            {editData ? `Updating configuration for ${editData.id}` : 'Create a fresh maintenance log for AirFix AI.'}
+          </p>
         </div>
       </div>
 
@@ -48,17 +83,17 @@ const AddBookingPage: React.FC = () => {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
               <div>
                 <label className="form-label">Full Name</label>
-                <input type="text" className="form-input" placeholder="e.g. Robert Fox" />
+                <input type="text" name="customer" value={formData.customer} onChange={handleChange} className="form-input" placeholder="e.g. Robert Fox" />
               </div>
               <div>
                 <label className="form-label">Phone Number</label>
-                <input type="tel" className="form-input" placeholder="+1 (555) 000-0000" />
+                <input type="tel" name="phone" value={formData.phone} onChange={handleChange} className="form-input" placeholder="+1 (555) 000-0000" />
               </div>
               <div style={{ gridColumn: 'span 2' }}>
                 <label className="form-label">Service Address</label>
                 <div style={{ position: 'relative' }}>
                   <MapPin size={18} style={{ position: 'absolute', left: '16px', top: '15px', color: 'var(--text-muted)' }} />
-                  <input type="text" className="form-input" style={{ paddingLeft: '48px' }} placeholder="Search for property address..." />
+                  <input type="text" name="address" value={formData.address} onChange={handleChange} className="form-input" style={{ paddingLeft: '48px' }} placeholder="Search for property address..." />
                 </div>
               </div>
             </div>
@@ -76,7 +111,7 @@ const AddBookingPage: React.FC = () => {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
               <div>
                 <label className="form-label">Service Type</label>
-                <select className="form-input">
+                <select name="service" value={formData.service} onChange={handleChange} className="form-input">
                   <option>Periodic Maintenance</option>
                   <option>Diagnostic Repair</option>
                   <option>Unit Installation</option>
@@ -85,11 +120,14 @@ const AddBookingPage: React.FC = () => {
               </div>
               <div>
                 <label className="form-label">AC Unit Model</label>
-                <input type="text" className="form-input" placeholder="e.g. Split Inverter 1.5T" />
+                <input type="text" name="unitModel" value={formData.unitModel} onChange={handleChange} className="form-input" placeholder="e.g. Split Inverter 1.5T" />
               </div>
               <div style={{ gridColumn: 'span 2' }}>
                 <label className="form-label">Incident Description</label>
                 <textarea 
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
                   className="form-input" 
                   style={{ minHeight: '120px', resize: 'vertical' }} 
                   placeholder="Describe the noise, leakage, or cooling issues in detail..."
@@ -112,23 +150,33 @@ const AddBookingPage: React.FC = () => {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <div>
                 <label className="form-label">Target Date</label>
-                <input type="date" className="form-input" />
+                <input type="date" name="date" value={formData.date} onChange={handleChange} className="form-input" />
               </div>
               <div>
                 <label className="form-label">Priority Level</label>
                 <div style={{ display: 'flex', gap: '8px' }}>
                   {['Low', 'Medium', 'High'].map(p => (
-                    <button key={p} style={{
-                      flex: 1,
-                      padding: '10px',
-                      borderRadius: '10px',
-                      border: '1px solid var(--border-color)',
-                      background: p === 'High' ? 'var(--color-danger)' : 'var(--bg-card)',
-                      color: p === 'High' ? 'white' : 'var(--text-main)',
-                      fontWeight: 700,
-                      fontSize: '0.8rem',
-                      cursor: 'pointer'
-                    }}>{p}</button>
+                    <button 
+                      key={p} 
+                      type="button"
+                      onClick={() => setFormData(prev => ({ ...prev, priority: p }))}
+                      style={{
+                        flex: 1,
+                        padding: '10px',
+                        borderRadius: '10px',
+                        border: '1px solid var(--border-color)',
+                        background: formData.priority === p 
+                          ? (p === 'High' ? 'var(--color-danger)' : 'var(--color-primary)') 
+                          : 'var(--bg-card)',
+                        color: formData.priority === p ? 'white' : 'var(--text-main)',
+                        fontWeight: 700,
+                        fontSize: '0.8rem',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s'
+                      }}
+                    >
+                      {p}
+                    </button>
                   ))}
                 </div>
               </div>
@@ -141,7 +189,7 @@ const AddBookingPage: React.FC = () => {
                 onClick={() => navigate('/admin/bookings')}
               >
                 <Save size={18} />
-                Confirm & Create
+                {editData ? 'Update Record' : 'Confirm & Create'}
               </button>
               <button 
                 className="secondary-btn" 
@@ -164,7 +212,7 @@ const AddBookingPage: React.FC = () => {
             <Clipboard size={32} style={{ marginBottom: '16px', opacity: 0.8 }} />
             <h4 style={{ margin: '0 0 8px 0', fontSize: '1.2rem', fontWeight: 800 }}>Quick Tip</h4>
             <p style={{ margin: 0, fontSize: '0.9rem', lineHeight: '1.5', opacity: 0.9 }}>
-              Providing the exact AC model helps our technicians carry the right spare parts, reducing repair time by 40%.
+              Providing the exact AC model helps our service providers carry the right spare parts, reducing repair time by 40%.
             </p>
           </div>
         </div>

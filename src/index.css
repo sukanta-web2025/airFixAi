@@ -550,7 +550,7 @@ select.form-input option {
   position: fixed;
   inset: 0;
   background: rgba(2, 6, 23, 0.8);
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(20px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -560,5 +560,5 @@ select.form-input option {
 
 [data-theme='light'] .modal-backdrop {
   background: rgba(15, 23, 42, 0.1);
-  backdrop-filter: blur(16px);
+  backdrop-filter: blur(20px);
 }

@@ -21,7 +21,7 @@ const AddUserModal: React.FC<AddUserModalProps> = memo(({ isOpen, onClose, onSav
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    role: 'Explorer'
+    role: 'Seeking Service'
   });
 
   useEffect(() => {
@@ -30,10 +30,10 @@ const AddUserModal: React.FC<AddUserModalProps> = memo(({ isOpen, onClose, onSav
         setFormData({
           name: initialData.name || '',
           email: initialData.email || '',
-          role: initialData.role || 'Explorer'
+          role: initialData.role || 'Seeking Service'
         });
       } else {
-        setFormData({ name: '', email: '', role: 'Explorer' });
+        setFormData({ name: '', email: '', role: 'Seeking Service' });
       }
     }
   }, [isOpen, initialData]);
@@ -121,7 +121,7 @@ const AddUserModal: React.FC<AddUserModalProps> = memo(({ isOpen, onClose, onSav
             {initialData ? 'Edit Member' : 'Add New Member'}
           </h3>
           <p style={{ color: 'var(--text-main)', opacity: 0.6, fontSize: '0.9rem', marginTop: '4px' }}>
-            {initialData ? 'Update roles and information of the member.' : 'Invite a new streamer or explorer to the platform.'}
+            {initialData ? 'Update roles and information of the member.' : 'Invite a new service provider or seeker to the platform.'}
           </p>
         </div>
 
@@ -181,7 +181,7 @@ const AddUserModal: React.FC<AddUserModalProps> = memo(({ isOpen, onClose, onSav
           <div>
             <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-main)', opacity: 0.8, marginBottom: '8px' }}>Access Role</label>
             <div style={{ display: 'flex', gap: '12px' }}>
-              {['Explorer', 'Streamer'].map((role) => (
+              {['Seeking Service', 'Service Provider'].map((role) => (
                 <button
                   key={role}
                   type="button"
@@ -203,7 +203,7 @@ const AddUserModal: React.FC<AddUserModalProps> = memo(({ isOpen, onClose, onSav
                     transition: 'all 0.2s'
                   }}
                 >
-                  {role === 'Streamer' ? <Shield size={16} /> : <User size={16} />}
+                  {role === 'Service Provider' ? <Shield size={16} /> : <User size={16} />}
                   {role}
                   {formData.role === role && <Check size={14} />}
                 </button>

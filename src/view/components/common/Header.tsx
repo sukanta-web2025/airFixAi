@@ -136,7 +136,6 @@ export const Header: React.FC<HeaderProps> = ({ onMenuClick, onCollapseClick, is
         >
           <div className="desktop-only" style={{ textAlign: 'right' }}>
             <p style={{ fontSize: '0.9rem', fontWeight: 800, color: 'var(--text-title)' }}>Alex Rivera</p>
-            <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Lead Admin</p>
           </div>
           <div style={{
             width: '42px',
